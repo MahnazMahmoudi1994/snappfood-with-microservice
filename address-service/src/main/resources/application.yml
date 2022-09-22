@@ -1,0 +1,56 @@
+server:
+  port: 0
+  servlet:
+    context-path: /addressservice
+---
+
+springdoc:
+  swagger-ui:
+    path: /swagger
+
+  api-docs:
+    path: /api-docs
+---
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/address-service
+    username: postgres
+    password: fmkaivan
+
+
+  jpa:
+    database-platform: org.hibernate.spatial.dialect.postgis.PostgisDialect
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+---
+minio:
+  bucket:
+    name: snapfood
+  default:
+    folder: "/"
+  access:
+    name: minioadmin
+    secret: minioadmin
+
+  url: http://127.0.0.1:9000
+
+---
+servlet:
+  multipart:
+    enabled: true
+    max-file-size: 10MB
+    max-request-size: 15MB
+
+---
+
+spring:
+  application:
+    name: address-service
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+    enabled: true
